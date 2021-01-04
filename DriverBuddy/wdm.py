@@ -1,9 +1,8 @@
 from idaapi import *
 from idautils import *
 from idc import *
-from ida_range.range_t import end_ea
-from ida_ida.import inf_get_min_ea()
-
+#from ida_funcs import func_t.start_ea
+import ida_range
 
 '''#######################################################################################
 
@@ -91,7 +90,7 @@ def locate_ddc(driver_entry_address):
     for ddc in ddc_list:
         for count, refs in enumerate(XrefsTo(ddc,0)):
             reffunc = get_func(refs.frm)
-            if reffunc is not None and reffunc.inf_get_min_ea == driver_entry_address:
+            if reffunc is not None and reffunc.start_ea == driver_entry_address:
                 real_ddc[count] = ddc
                 print("[+] Possible DispatchDeviceControl 0x%08x" % ddc)
                 set_name(ddc, "Possible_DispatchDeviceControl%r" % count)
